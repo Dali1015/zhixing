@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 双向 MCP (Model Context Protocol) 桥接器
+知行 Agent Runtime — 双向 MCP (Model Context Protocol) 桥接器
 1. MCP Client：连接任意外部第三方 MCP Server（支持 streamableHttp URL 与本地 stdio 进程），动态拉取工具并注入 Agent 工具箱；
 2. MCP Server：通过 POST /mcp 标准 JSON-RPC 2.0 暴露本底座全部 8 个原语工具，供华为云 AgentArts 等外部平台一键挂载。
 """
@@ -57,7 +57,7 @@ class MCPClient:
             "jsonrpc": "2.0",
             "id": 1,
             "method": "initialize",
-            "params": {"protocolVersion": "2025-03-26", "clientInfo": {"name": "muse-agent-runtime", "version": "3.0.0"}, "capabilities": {}},
+            "params": {"protocolVersion": "2025-03-26", "clientInfo": {"name": "zhixing-agent-runtime", "version": "3.0.0"}, "capabilities": {}},
         }
         list_req = {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}
 
@@ -91,7 +91,7 @@ class MCPClient:
             "jsonrpc": "2.0",
             "id": 1,
             "method": "initialize",
-            "params": {"protocolVersion": "2025-03-26", "clientInfo": {"name": "muse-agent-runtime", "version": "3.0.0"}, "capabilities": {}},
+            "params": {"protocolVersion": "2025-03-26", "clientInfo": {"name": "zhixing-agent-runtime", "version": "3.0.0"}, "capabilities": {}},
         }
         call_req = {
             "jsonrpc": "2.0",

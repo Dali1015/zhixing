@@ -1,4 +1,4 @@
-"""Invite-only Muse question-and-answer service for a small team."""
+"""Invite-only Zhixing question-and-answer service for a small team."""
 
 import hashlib
 import hmac
@@ -27,7 +27,7 @@ LOGIN_PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Muse 知行 · 组内试用</title>
+<title>知行 · 组内试用</title>
 <style>
   body { margin:16px; min-height:calc(100dvh - 32px); display:grid; place-items:center;
          font:15px/1.6 -apple-system,BlinkMacSystemFont,"Inter","PingFang SC",sans-serif; color:#13221d;
@@ -50,8 +50,8 @@ LOGIN_PAGE = """<!doctype html>
 </style>
 </head>
 <body><main>
-<div class="mark" aria-hidden="true">M</div>
-<h1>Muse 知行</h1>
+<div class="mark" aria-hidden="true">知</div>
+<h1>知行</h1>
 <p>输入团队邀请码，进入独立隔离的组内问答试用空间。</p>
 {error}
 <form action="/login" method="post">
@@ -192,16 +192,16 @@ def main():
 
     os.environ["MUSE_WORKSPACE_DIR"] = str(root / "service")
     os.environ["MUSE_DISABLE_DAEMON"] = "1"
-    from run import AppHandler, _MuseHTTPServer
+    from run import AppHandler, _ZhixingHTTPServer
 
     root = root / "visitors"
     root.mkdir(parents=True, mode=0o700, exist_ok=True)
-    with _MuseHTTPServer(("0.0.0.0", int(os.environ.get("PORT", "10000"))), create_handler(AppHandler)) as server:
+    with _ZhixingHTTPServer(("0.0.0.0", int(os.environ.get("PORT", "10000"))), create_handler(AppHandler)) as server:
         server.invite = invite
         server.data_dir = root
         server.public_origin = os.environ.get("RENDER_EXTERNAL_URL", "").strip().rstrip("/")
         server.chat_slots = BoundedSemaphore(4)
-        print(f"Muse team preview listening on port {server.server_port}", flush=True)
+        print(f"知行团队试用服务监听端口 {server.server_port}", flush=True)
         server.serve_forever()
 
 

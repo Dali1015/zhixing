@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Muse Personal AI Agent Runtime — 市场级全栈硬核实测与端到端基准套件
+知行 Personal AI Agent Runtime — 市场级全栈硬核实测与端到端基准套件
 全面核验：
   1. 分片 SSE 思维链 + 流式 Tool-Calls JSON 重组解析器
   2. 真实 Excel (.xlsx) 上传 + 受控 Python 代码沙箱精确计算 + AST 危险指令拦截
@@ -853,7 +853,7 @@ def test_12_academic_engine_audit_what_if_and_ics():
     assert code == 200
     rep_res = json.loads(raw.decode("utf-8"))
     assert rep_res["ok"] is True and rep_res["artifact"]["kind"] == "html"
-    assert "知行学枢" in rep_res["artifact"]["content"] and "85.03" in rep_res["artifact"]["content"]
+    assert "知行" in rep_res["artifact"]["content"] and "85.03" in rep_res["artifact"]["content"]
 
     code, _, raw = _InMemoryHTTP.request("POST", "/api/academic/sync-memory", {"summary": summary})
     assert code == 200
@@ -890,7 +890,7 @@ def test_14_account_template_and_product_academic_isolation():
         "password_autocomplete": "current-password", "message": "",
         "register_code": "", "data_hint": "",
     })
-    assert "Muse 知行" in rendered and "{title}" not in rendered
+    assert "知行" in rendered and "{title}" not in rendered
 
     # 验证产品模式下已登录账号可使用确定性学业体检与沙盘，且严格保持 Origin 校验与高危接口隔离
     handler = create_product_handler(app_run.AppHandler)

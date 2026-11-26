@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 可插拔 Skills 技能包管理系统
+知行 Agent Runtime — 可插拔 Skills 技能包管理系统
 将特定行业/高校业务规则从底座硬编码中彻底剥离，以标准 Markdown + YAML Frontmatter 技能包按需挂载、在线编辑或扩展。
 """
 import os

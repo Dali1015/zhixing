@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Muse (知行) Personal AI Agent Runtime — 全栈服务端入口
-对标市场主流通用 Agent 底座（Claude Desktop / Manus / Muse / Dify）：
+知行 Personal AI Agent Runtime — 全栈服务端入口
+对标市场主流通用 Agent 底座（Claude Desktop / Manus / Dify）：
   • HTTP SSE 对话与交付物通知
   • 受控 Python 3 代码解释器沙箱（直接计算工作区 Excel / CSV / Word / 文本数据）
   • 免 Key 全网搜索 + 任意网页正文阅读 + 5 类实时信息流连接器守护进程
@@ -97,7 +97,7 @@ def build_openapi_spec(host_header: str) -> Dict[str, Any]:
     return {
         "openapi": "3.1.0",
         "info": {
-            "title": "Muse Personal AI Agent Runtime API",
+            "title": "知行智能体运行时 API",
             "version": "3.0.0",
             "description": "面向华为云 AgentArts 与外部系统的通用智能体运行时 REST 插件规范（含全网检索、Python 沙箱、长期记忆、FTS5 知识库与画布生成）。",
         },
@@ -170,7 +170,7 @@ class AppHandler(BaseHTTPRequestHandler):
     def log_message(self, fmt: str, *args: Any) -> None:
         if os.environ.get("MUSE_QUIET_LOG") == "1":
             return
-        sys.stderr.write("[MuseRuntime] %s - %s\n" % (self.address_string(), fmt % args))
+        sys.stderr.write("[ZhixingRuntime] %s - %s\n" % (self.address_string(), fmt % args))
 
     def _send_cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -333,13 +333,13 @@ class AppHandler(BaseHTTPRequestHandler):
             md_lines = [
                 f"# {sess['title']}",
                 "",
-                f"> 导出自 Muse（知行学枢）· 会话创建于 {sess['created_at']}",
+                f"> 导出自 知行· 会话创建于 {sess['created_at']}",
                 "",
                 "---",
                 "",
             ]
             for m in msgs:
-                role_label = "用户" if m["role"] == "user" else "Muse 智能体"
+                role_label = "用户" if m["role"] == "user" else "知行"
                 md_lines.append(f"## {role_label} ({m.get('created_at', '')})")
                 md_lines.append("")
                 md_lines.append(m.get("content", ""))
@@ -418,7 +418,7 @@ class AppHandler(BaseHTTPRequestHandler):
                     "result": {
                         "protocolVersion": "2025-03-26",
                         "capabilities": {"tools": {"listChanged": False}},
-                        "serverInfo": {"name": "muse-personal-agent-runtime", "version": "3.0.0"},
+                        "serverInfo": {"name": "zhixing-personal-agent-runtime", "version": "3.0.0"},
                     },
                 })
                 return
@@ -879,7 +879,7 @@ class AppHandler(BaseHTTPRequestHandler):
         self._send_json({"ok": False, "error": f"Unknown endpoint: {path}"}, status=404)
 
 
-class _MuseHTTPServer(ThreadingHTTPServer):
+class _ZhixingHTTPServer(ThreadingHTTPServer):
     allow_reuse_address = True
     daemon_threads = True
 
@@ -887,20 +887,20 @@ class _MuseHTTPServer(ThreadingHTTPServer):
 def main():
     if PRODUCT_ENTRY:
         from product_server import start_product
-        start_product(AppHandler, _MuseHTTPServer, STORAGE)
+        start_product(AppHandler, _ZhixingHTTPServer, STORAGE)
         return
     port = int(os.environ.get("PORT", "8765"))
     host = os.environ.get("HOST", "127.0.0.1")
-    server = _MuseHTTPServer((host, port), AppHandler)
+    server = _ZhixingHTTPServer((host, port), AppHandler)
     st = _public_llm_status(STORAGE)
-    print(f"Muse Personal AI Agent Runtime started -> http://{host}:{port}")
+    print(f"知行智能体运行时已启动 -> http://{host}:{port}")
     print(f"  Workspace : {STORAGE.workspace_dir}")
     print(f"  MCP Server: http://{host}:{port}/mcp (streamableHttp JSON-RPC 2.0)")
     print(f"  LLM Ready : {st['engine_ready']} (model={st['model']})")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\nShutting down Muse Runtime...")
+        print("\n正在关闭知行智能体运行时...")
         server.server_close()
 
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse (知行学枢) — 零算术幻觉确定性学业精算与决策引擎
+知行 — 零算术幻觉确定性学业精算与决策引擎
 严格依据河南师范大学《计算机/软件类本科培养方案(2024版)》《综合素质测评与推免实施细则(2026版)》
 与《教育部榜单学科竞赛分级认定目录》，使用 Python Decimal 实现：
   1. 成绩单多格式智能解析（Excel / CSV / 文本多列）与课程模块自动归类；
@@ -842,7 +842,7 @@ def build_ics_calendar(
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//Muse Zhixing Academic Agent//HTU AgentArts//CN",
+        "PRODID:-//Zhixing Academic Agent//HTU AgentArts//CN",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
         f"X-WR-CALNAME:{_ics_escape(title)}",
@@ -852,7 +852,7 @@ def build_ics_calendar(
         uid = f"muse-{uuid.uuid4().hex[:10]}-{idx}@zhixing.agent"
         summary = _ics_escape(ev.get("summary") or f"学业计划 #{idx}")
         desc = _ics_escape(ev.get("description") or "")
-        loc = _ics_escape(ev.get("location") or "河南师范大学 · 知行学枢排期")
+        loc = _ics_escape(ev.get("location") or "河南师范大学 · 知行排期")
         dtstart = str(ev.get("dtstart") or "")
         dtend = str(ev.get("dtend") or "")
         lines.extend([
@@ -925,7 +925,7 @@ def generate_opportunity_ics(
         "description": f"最终提交截止时间：{deadline_str}\n请核验全部材料：{materials_txt}",
     })
 
-    ics_content = build_ics_calendar(f"知行学枢 · {notice_title[:24]}", events)
+    ics_content = build_ics_calendar(f"知行 · {notice_title[:24]}", events)
     return ics_content, events
 
 
@@ -998,7 +998,7 @@ def render_academic_report_html(audit: Dict[str, Any], what_if: Optional[Dict[st
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>知行学枢 · 学业确定性体检报告</title>
+<title>知行 · 学业确定性体检报告</title>
 <style>
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
@@ -1041,7 +1041,7 @@ def render_academic_report_html(audit: Dict[str, Any], what_if: Optional[Dict[st
 <div class="wrap">
   <section class="hero">
     <div>
-      <h1>知行学枢 · 学业确定性体检报告</h1>
+      <h1>知行 · 学业确定性体检报告</h1>
       <p>目标方向：{escape(s["target_direction"])} · {s["grade"]}级 · 基于 Python Decimal 确定性规则引擎核算（零算术幻觉）</p>
     </div>
     <svg width="108" height="108" viewBox="0 0 112 112" aria-label="毕业学分进度">
@@ -1072,7 +1072,7 @@ def render_academic_report_html(audit: Dict[str, Any], what_if: Optional[Dict[st
 
   {what_if_html}
 
-  <div class="foot">本报告由知行学枢确定性精算引擎生成，供选课与申报前自查参考，最终认定以学院教务办与学工办公示为准。</div>
+  <div class="foot">本报告由知行确定性精算引擎生成，供选课与申报前自查参考，最终认定以学院教务办与学工办公示为准。</div>
 </div>
 </body>
 </html>"""

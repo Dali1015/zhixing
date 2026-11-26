@@ -28,7 +28,7 @@ sys.path.insert(0, str(BASE_DIR))
 from backend.runtime.accounts import SESSION_TTL  # noqa: E402
 from backend.runtime.llm_client import probe_llm_connection  # noqa: E402
 from product_server import COOKIE_NAME, configure_server, create_product_handler  # noqa: E402
-from run import AppHandler, _MuseHTTPServer, _public_llm_status  # noqa: E402
+from run import AppHandler, _ZhixingHTTPServer, _public_llm_status  # noqa: E402
 
 # 产品版默认把模型配置锁在服务端；这里把「我的模型配置」开放给已登录账号
 SETTINGS_ROUTES = frozenset({"/api/settings/llm", "/api/settings/llm/test"})
@@ -159,7 +159,7 @@ def main():
     port = int(os.environ.get("PORT", "8000"))
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    with _MuseHTTPServer((host, port), PersonalWorkspaceHandler) as server:
+    with _ZhixingHTTPServer((host, port), PersonalWorkspaceHandler) as server:
         configure_server(
             server,
             DATA_DIR,
@@ -170,7 +170,7 @@ def main():
             registration_enabled=os.environ.get("MUSE_ALLOW_REGISTRATION", "1") != "0",
             chat_limit=int(os.environ.get("MUSE_DAILY_CHAT_LIMIT", "50")),
         )
-        print(f"Muse 个人学业工作台已启动 -> http://{host}:{port}", flush=True)
+        print(f"知行个人学业工作台已启动 -> http://{host}:{port}", flush=True)
         print(f"  数据目录: {DATA_DIR}", flush=True)
         try:
             server.serve_forever()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 受控 Python 代码解释器沙箱 (Code Interpreter)
+知行 Agent Runtime — 受控 Python 代码解释器沙箱 (Code Interpreter)
 能力：
 1. 允许 Agent 编写任意数据处理、统计分析、Excel/CSV/Word 解析、图表(SVG/HTML)生成与 .ics 日历构建脚本；
 2. AST 静态安全检查拦截危险系统破坏操作；

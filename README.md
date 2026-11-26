@@ -1,8 +1,8 @@
-# Muse（知行）— 市场级通用个人智能体底座 (Personal AI Agent Runtime)
+# 知行— 市场级通用个人智能体底座 (Personal AI Agent Runtime)
 
 > **第十一届华为 ICT 大赛（中国区创新赛 · 赛题 2：基于华为云 AgentArts 智能体开发平台的 Agent 设计和应用）核心工程实现**
 
-Muse 是一款摒弃一切写死表单与虚假话术模板、对标主流商业智能体底座（Claude Desktop / Manus / Muse / Dify）的**通用个人自主智能体运行时**。基于 Python 3 标准库 + SQLite WAL/FTS5 零外部依赖构建，开箱即用。
+知行是一款摒弃一切写死表单与虚假话术模板、对标主流商业智能体底座（Claude Desktop / Manus / Dify）的**通用个人自主智能体运行时**。基于 Python 3 标准库 + SQLite WAL/FTS5 零外部依赖构建，开箱即用。
 
 ---
 

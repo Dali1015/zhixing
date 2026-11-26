@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 市场级统一持久化与工作区存储底座 (SQLite WAL + FTS5 + 物理文件工作区)
+知行 Agent Runtime — 市场级统一持久化与工作区存储底座 (SQLite WAL + FTS5 + 物理文件工作区)
 无任何写死假学生账号或硬编码专业表单，支撑通用智能体核心原语：
   • 多轮会话与内部工具事件记录 (sessions / messages)
   • 自进化长期记忆库 (memories: profile / goal / preference / fact)

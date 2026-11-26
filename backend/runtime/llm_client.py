@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 原生 HTTP SSE 逐 Token 流式大模型客户端
+知行 Agent Runtime — 原生 HTTP SSE 逐 Token 流式大模型客户端
 特性：
 1. 真实开启 stream=True，逐行无缓冲解析远端 SSE 数据流；
 2. 在当前请求内保留工具调用所需的 reasoning_content；
@@ -187,7 +187,7 @@ def _build_auth_headers(api_url: str, api_key: str, accept_sse: bool = True) -> 
     headers = {
         "Content-Type": "application/json",
         "Accept": "text/event-stream, application/json" if accept_sse else "application/json",
-        "User-Agent": "MuseAgentRuntime/3.0",
+        "User-Agent": "ZhixingAgentRuntime/3.0",
         "Connection": "close",
     }
     clean_k = clean_api_key(api_key)

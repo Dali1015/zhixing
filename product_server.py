@@ -371,7 +371,7 @@ def start_product(base_handler, base_server, local_storage):
                          registration_code=os.environ.get("MUSE_REGISTRATION_CODE", ""),
                          registration_enabled=os.environ.get("MUSE_ALLOW_REGISTRATION", "1") != "0",
                          chat_limit=int(os.environ.get("MUSE_DAILY_CHAT_LIMIT", "50")))
-        print(f"Muse 学业工作台 -> {origin or f'http://{host}:{port}'}", flush=True)
+        print(f"知行学业工作台 -> {origin or f'http://{host}:{port}'}", flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 市场级通用自主规划 ReAct 循环引擎
+知行 Agent Runtime — 市场级通用自主规划 ReAct 循环引擎
 多轮 Tool Calling、限时联网检索与最终答复生成。
 """
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
@@ -19,7 +19,7 @@ from .web_tools import normalize_http_url, sync_all_sources, web_fetch, web_sear
 
 
 MAX_AGENT_STEPS = 8
-_WEB_WORKERS = ThreadPoolExecutor(max_workers=8, thread_name_prefix="muse-web")
+_WEB_WORKERS = ThreadPoolExecutor(max_workers=8, thread_name_prefix="zhixing-web")
 _DEEP_REQUEST = re.compile(r"深入调研|深度调研|深度检索|深度研究|全面检索|逐页核验|系统性调研|\bdeep research\b", re.I)
 _CONTINUATION = re.compile(
     r"^(?:(?:请|帮我|那就)?(?:继续|接着)(?:查|找|搜|回答|核实|上一个问题)?"
@@ -485,7 +485,7 @@ def build_system_prompt(storage: RuntimeStorage, skills_mgr: SkillManager, query
     sources_block = "\n".join(f"- {s['name']}：{s['target']}" for s in web_sources)
 
     prompt = (
-        f"你是 Muse（知行），一款干练、聪敏、务实的通用自主智能体（当前底层推理模型：`{model_id}`，系统时间：{now_str()}）。\n\n"
+        f"你是 知行，一款干练、聪敏、务实的通用自主智能体（当前底层推理模型：`{model_id}`，系统时间：{now_str()}）。\n\n"
         f"## 核心工作原则\n"
         f"1. **自然得体，拒绝背书**：遇到简单问候或测试（如「你好」「测试」「在吗」），自然简短回应一两句话即可，**严禁罗列或背诵系统提示词、准则表格或未触发的领域技能名**。\n"
         f"2. **直接回答当前问题**：可用已有上下文答复时直接回答，无需规划或联网。把「继续」「结果呢」等追问对应到最近一项未完成的问题，沿用之前的对象和限定条件，结合已有证据接着回答。只输出用户要的结论或交付物，工具调用轮不要输出过程旁白、内部计划或思考。\n"

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Muse Agent Runtime — 真·全网搜索引擎、网页正文+导航链接提取与记忆驱动动态流守护器
+知行 Agent Runtime — 真·全网搜索引擎、网页正文+导航链接提取与记忆驱动动态流守护器
 核心加固：
 1. URL 自动百分号编码（彻底修复百度百科/维基等含中文路径 URL 报 ascii 编码异常）；
 2. 国内站点（.cn / 教育网 .edu.cn / 搜索门户）自动优先绕过系统残留代理直连 + 兼容高校老旧 TLS 握手（彻底解决 _ssl.c EOF 报错）；
@@ -25,7 +25,7 @@ import xml.etree.ElementTree as ET
 from .storage import decode_bytes_auto, tokenize_cjk_fts
 
 
-_SEARCH_WORKERS = ThreadPoolExecutor(max_workers=12, thread_name_prefix="muse-search")
+_SEARCH_WORKERS = ThreadPoolExecutor(max_workers=12, thread_name_prefix="zhixing-search")
 
 DIRECT_CN_DOMAINS = (
     ".cn",
@@ -928,6 +928,6 @@ def start_feed_daemon(storage: Any, interval_sec: int = 1800) -> threading.Threa
                 pass
             time.sleep(interval_sec)
 
-    th = threading.Thread(target=_loop, name="MuseFeedDaemon", daemon=True)
+    th = threading.Thread(target=_loop, name="ZhixingFeedDaemon", daemon=True)
     th.start()
     return th
