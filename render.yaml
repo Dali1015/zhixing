@@ -1,0 +1,33 @@
+services:
+  # 个人注册登录版（推荐）：每位用户在自己的账号里填自己的模型 API Key，服务端无需任何密钥
+  - type: web
+    name: muse-personal
+    runtime: python
+    plan: free
+    buildCommand: python -m compileall -q backend run.py app.py
+    startCommand: python app.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: MUSE_ALLOW_REGISTRATION
+        value: "1"
+      - key: MUSE_DAILY_CHAT_LIMIT
+        value: "50"
+      # 想限制注册就填一个至少 12 位的串（注册页会要求填邀请码）；留空表示开放注册
+      - key: MUSE_REGISTRATION_CODE
+        sync: false
+
+  # 组内邀请码问答版（可选）。不需要就整段删掉，不影响上面的个人版
+  - type: web
+    name: muse-team-preview
+    runtime: python
+    plan: free
+    buildCommand: python -m compileall -q backend run.py team_server.py
+    startCommand: python team_server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: MUSE_TEAM_CODE
+        sync: false
+      - key: MUSE_TEAM_COOKIE_KEY
+        generateValue: true

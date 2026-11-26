@@ -1,0 +1,228 @@
+[
+  {
+    "notice_id": "htu_cs_aoxiang_2026",
+    "title": "【今日发布】关于做好2026年度“翱翔基金”和“慧蕴‘AI’心助学基金”评选工作的通知",
+    "source_dept": "河师大计算机与信息工程学院",
+    "source_channel": "htu_official",
+    "feed_type": "campus",
+    "tags": ["翱翔基金", "奖学金", "AI智能体", "保研推免"],
+    "source_url": "https://www.htu.edu.cn/cs/2026/1125/c1006a414712/page.htm",
+    "publish_date": "2026-11-25",
+    "deadline": "2026-12-05 17:00",
+    "category": "河师大奖助基金",
+    "benefit_tag": "计算机与信息工程学院（人工智能学院）专属奖助基金评选",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025],
+      "min_gpa": 3.50,
+      "min_cet4": 425,
+      "min_cet6": 0,
+      "min_volunteer_hours": 20,
+      "no_fail_required": true
+    },
+    "required_materials": [
+      "填写《翱翔基金》或《慧蕴‘AI’心助学基金》评审申请表",
+      "教务系统成绩单及志愿服务时长证明（≥20小时）"
+    ],
+    "prep_tasks": [
+      { "step": "核对学年志愿服务时长证明与成绩单扫描件", "est_hours": 1.0, "days_before_deadline": 4 },
+      { "step": "提交基金申请材料至计算机学院学工办", "est_hours": 1.5, "days_before_deadline": 1 }
+    ]
+  },
+  {
+    "notice_id": "htu_jwc_boyue_2026",
+    "title": "河南师范大学教务处：关于2026年度博约通识教育课程补充遴选及修读要求通知",
+    "source_dept": "河南师范大学教务处",
+    "source_channel": "htu_official",
+    "feed_type": "campus",
+    "tags": ["博约通识选课", "选课", "教务处", "毕业体检"],
+    "source_url": "https://www.htu.edu.cn/teaching/2026/1113/c3251a412614/page.htm",
+    "publish_date": "2026-11-13",
+    "deadline": "2027-01-08 17:00",
+    "category": "河师大教务",
+    "benefit_tag": "博约通识总计≥18学分（经典≥4 / 核心≥12 / 百花≥2），线上课需绑定学习通",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025, 2026],
+      "min_gpa": 0.0,
+      "min_cet4": 0,
+      "min_cet6": 0,
+      "min_volunteer_hours": 0,
+      "no_fail_required": false
+    },
+    "required_materials": [
+      "核查个人博约经典(≥4)、博约核心(≥12)、博约百花(≥2)学分缺口",
+      "通过「学习通」APP 绑定单位“河南师范大学”准备春季博约通识修读"
+    ],
+    "prep_tasks": [
+      { "step": "核查博约百花与博约核心剩余学分，锁定春季备选课程", "est_hours": 1.0, "days_before_deadline": 10 },
+      { "step": "登录河师大一网通办教务系统完成博约通识选课", "est_hours": 1.0, "days_before_deadline": 2 }
+    ]
+  },
+  {
+    "notice_id": "huawei_ict_2026_real",
+    "title": "第十一届华为ICT大赛（中国赛-创新赛）报名倒计时5天 & 初赛提交指南",
+    "source_dept": "华为ICT学院官网（教育部A类榜单）",
+    "source_channel": "web_feed",
+    "feed_type": "competition",
+    "tags": ["华为ICT大赛", "AI智能体", "华为云", "保研推免"],
+    "source_url": "https://e.huawei.com/cn/talent/#/ict/innovation-details?zoneCode=027425&zoneId=98269700&compId=85132021&divisionName=%E4%B8%AD%E5%9B%BD%E5%8C%BA&type=C002",
+    "publish_date": "2026-11-25",
+    "deadline": "2026-11-30 23:59",
+    "category": "A类榜单赛事",
+    "benefit_tag": "赛题二基于华为云AgentArts，国奖综测最高+3.60分 & 认定3.0创新学分",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025, 2026],
+      "min_gpa": 0.0,
+      "min_cet4": 0,
+      "min_cet6": 0,
+      "min_volunteer_hours": 0,
+      "no_fail_required": false
+    },
+    "required_materials": [
+      "3名同校同学 + 1名同校指导教师于11月30日前锁定赛题二",
+      "【赛题2-模板1】作品信息收集表Word与AgentArts演示视频（12月15日18:00截止）"
+    ],
+    "prep_tasks": [
+      { "step": "完成华为ICT大赛官网团队报名与赛题二确认", "est_hours": 1.5, "days_before_deadline": 3 },
+      { "step": "在华为云AgentArts挂载河师大校规库与MCP工具并录制演示视频", "est_hours": 6.0, "days_before_deadline": 1 }
+    ]
+  },
+  {
+    "notice_id": "htu_jwc_kejiao_2026",
+    "title": "河南师范大学教务处：关于组织申报第二批河南省科教融汇协同育人项目的通知",
+    "source_dept": "河南师范大学教务处",
+    "source_channel": "htu_official",
+    "feed_type": "campus",
+    "tags": ["保研推免", "科研", "AI智能体", "教务处"],
+    "source_url": "https://www.htu.edu.cn/teaching/2026/1110/c3251a412239/page.htm",
+    "publish_date": "2026-11-10",
+    "deadline": "2026-12-10 17:00",
+    "category": "省级科教项目",
+    "benefit_tag": "对接科研院所导师团队，极佳保研科研履历与大创升级入口",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025],
+      "min_gpa": 3.30,
+      "min_cet4": 425,
+      "min_cet6": 450,
+      "min_volunteer_hours": 0,
+      "no_fail_required": true
+    },
+    "required_materials": [
+      "主动联系本院人工智能/大数据方向导师组队",
+      "撰写协同育人学生子课题参与意向书"
+    ],
+    "prep_tasks": [
+      { "step": "筛选学院近两年有科教融汇课题的导师并发送个人简历", "est_hours": 2.0, "days_before_deadline": 5 }
+    ]
+  },
+  {
+    "notice_id": "htu_rjxy_cert_2026",
+    "title": "河南师范大学软件学院：2026年度「前沿技术认证激励」与「乐草元」奖助学金动态",
+    "source_dept": "河师大软件学院",
+    "source_channel": "htu_official",
+    "feed_type": "campus",
+    "tags": ["前沿技术认证", "乐草元奖助学金", "华为云", "奖学金"],
+    "source_url": "https://www.htu.edu.cn/sw/",
+    "publish_date": "2026-11-22",
+    "deadline": "2026-12-06 17:00",
+    "category": "河师大院级激励",
+    "benefit_tag": "考取华为云/HCIA/HCIP等前沿认证可享专项激励 + 创新学分认定",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025],
+      "min_gpa": 3.00,
+      "min_cet4": 425,
+      "min_cet6": 0,
+      "min_volunteer_hours": 0,
+      "no_fail_required": true
+    },
+    "required_materials": [
+      "软件学院前沿技术认证激励/奖助学金申请表",
+      "认证电子证书或可信成绩单证明"
+    ],
+    "prep_tasks": [
+      { "step": "整理华为云/行业认证证书扫描件与电子成绩单", "est_hours": 1.5, "days_before_deadline": 4 },
+      { "step": "按软件学院官网通知要求提交审核材料", "est_hours": 1.0, "days_before_deadline": 1 }
+    ]
+  },
+  {
+    "notice_id": "htu_grad_photo_2026",
+    "title": "河南师范大学教务处：关于开展2027届毕业生毕业图像信息采集的通知",
+    "source_dept": "河南师范大学教务处",
+    "source_channel": "htu_official",
+    "feed_type": "campus",
+    "tags": ["毕业体检", "教务处"],
+    "source_url": "https://www.htu.edu.cn/teaching/2026/1104/c3251a411163/page.htm",
+    "publish_date": "2026-11-04",
+    "deadline": "2026-12-08 17:00",
+    "category": "毕业环节提醒",
+    "benefit_tag": "2023级(2027届)大四同学学历学位认证必备环节",
+    "rules": {
+      "allowed_grades": [2023],
+      "min_gpa": 0.0,
+      "min_cet4": 0,
+      "min_cet6": 0,
+      "min_volunteer_hours": 0,
+      "no_fail_required": false
+    },
+    "required_materials": [
+      "学信网获取毕业图像采集码",
+      "按学院排期携带身份证参加现场或线上核验采集"
+    ],
+    "prep_tasks": [
+      { "step": "登录学信网公众号生成采集码并核对学籍信息", "est_hours": 0.5, "days_before_deadline": 3 }
+    ]
+  },
+  {
+    "notice_id": "htu_jwc_cet_2026",
+    "title": "河南师范大学计算机学院：2027年接收推荐免试研究生复试及录取办法参考",
+    "source_dept": "河师大计算机与信息工程学院",
+    "source_channel": "htu_official",
+    "feed_type": "campus",
+    "tags": ["保研推免", "四六级", "AI智能体"],
+    "source_url": "https://www.htu.edu.cn/cs/2026/0921/c1006a405219/page.htm",
+    "publish_date": "2026-09-21",
+    "deadline": "2026-12-12 09:00",
+    "category": "推免政策参考",
+    "benefit_tag": "明确本院计算机/人工智能方向推免复试考核形式与综合素质要求",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025],
+      "min_gpa": 3.30,
+      "min_cet4": 425,
+      "min_cet6": 0,
+      "min_volunteer_hours": 0,
+      "no_fail_required": true
+    },
+    "required_materials": [
+      "对照推免复试办法提前准备算法机试与项目科研答辩简历"
+    ],
+    "prep_tasks": [
+      { "step": "整理本科阶段核心竞赛/大创项目PPT与个人陈述", "est_hours": 3.0, "days_before_deadline": 4 }
+    ]
+  },
+  {
+    "notice_id": "web_ai_agent_trend_2026",
+    "title": "【全网精选】华为云 AgentArts 多智能体与 MCP（streamableHttp）企业级开发实践手册",
+    "source_dept": "华为云开发者社区 · AI前沿动态",
+    "source_channel": "web_feed",
+    "feed_type": "web_tech",
+    "tags": ["AI智能体", "华为云", "华为ICT大赛", "大厂后端", "Python"],
+    "source_url": "https://support.huaweicloud.com/agentarts/index.html",
+    "publish_date": "2026-11-24",
+    "deadline": "2026-12-15 18:00",
+    "category": "全网技术精选",
+    "benefit_tag": "直接对应华为ICT创新赛赛题二核心加分点：中央控制器 + Rerank + MCP",
+    "rules": {
+      "allowed_grades": [2023, 2024, 2025, 2026],
+      "min_gpa": 0.0,
+      "min_cet4": 0,
+      "min_cet6": 0,
+      "min_volunteer_hours": 0,
+      "no_fail_required": false
+    },
+    "required_materials": [
+      "阅读 AgentArts 多智能体编排与 streamableHttp MCP 接入文档"
+    ],
+    "prep_tasks": [
+      { "step": "参照手册将本地 /mcp 工具端点挂载至 AgentArts 平台完成联调", "est_hours": 2.5, "days_before_deadline": 5 }
+    ]
+  }
+]

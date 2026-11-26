@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title} · Muse 知行学业工作台</title>
+  <style>
+    :root {{
+      color-scheme: light;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #13221d;
+      background: #f5f6f1;
+      font-size: 16px;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(23, 82, 67, 0.08), transparent 45%),
+        radial-gradient(circle at 88% 82%, rgba(160, 116, 44, 0.08), transparent 42%),
+        #f5f6f1;
+    }}
+    .auth-shell {{
+      display: grid;
+      grid-template-columns: 1.05fr minmax(310px, 445px);
+      width: min(960px, 100%);
+      border-radius: 22px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dce3da;
+      box-shadow: 0 24px 64px rgba(14, 42, 34, 0.12);
+    }}
+    .product {{
+      padding: clamp(30px, 5vw, 56px);
+      color: #f1faf5;
+      background: linear-gradient(145deg, #0d3127 0%, #175243 60%, #1f6552 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }}
+    .product::after {{
+      content: "";
+      position: absolute;
+      right: -54px;
+      bottom: -54px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(166, 232, 198, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }}
+    .brand {{ display: inline-flex; gap: 10px; align-items: center; font-weight: 700; letter-spacing: -0.02em; }}
+    .mark {{
+      display: grid; place-items: center; width: 34px; height: 34px;
+      color: #0e3329; background: #dff4e8; border-radius: 10px; font-weight: 800;
+    }}
+    .kicker {{
+      margin-top: 38px;
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #9ed9be;
+      font-weight: 600;
+    }}
+    .product h1 {{
+      margin: 10px 0 14px;
+      line-height: 1.15;
+      font-size: clamp(30px, 4.4vw, 44px);
+      letter-spacing: -.035em;
+    }}
+    .product p {{ color: #d3e9dd; margin: 0; line-height: 1.72; font-size: 0.94rem; }}
+    .features {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+      margin: 30px 0 0;
+    }}
+    .features li {{
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: .84rem;
+      line-height: 1.45;
+    }}
+    .features strong {{ display: block; color: #ffffff; margin-bottom: 2px; }}
+    .features span {{ color: #cbe3d6; font-size: 0.78rem; }}
+    .entry {{ padding: clamp(28px, 4.5vw, 46px); display: flex; flex-direction: column; justify-content: center; }}
+    h2 {{ margin: 0 0 6px; font-size: 24px; letter-spacing: -0.02em; color: #13221d; }}
+    .entry-sub {{ margin: 0 0 22px; font-size: 0.86rem; color: #5b6d65; }}
+    form {{ display: grid; gap: 9px; }}
+    label {{ font-weight: 620; font-size: .88rem; margin-top: 5px; color: #2b3f37; }}
+    input, button {{ font: inherit; border-radius: 10px; padding: 11px 13px; width: 100%; }}
+    input {{ border: 1px solid #c5d1c8; background: #fafaf7; transition: all 0.15s; }}
+    input:focus {{ border-color: #175243; background: #ffffff; outline: 3px solid rgba(23, 82, 67, 0.14); }}
+    button {{
+      margin-top: 12px; cursor: pointer; color: #fff; background: #175243;
+      border: 1px solid #175243; font-weight: 650; transition: all 0.15s;
+    }}
+    button:hover {{ background: #0f3d31; transform: translateY(-0.5px); }}
+    .hint, .privacy {{ margin: 0 0 4px; color: #5c6e66; font-size: .8rem; line-height: 1.6; }}
+    .privacy {{ margin-top: 16px; padding-top: 12px; border-top: 1px solid #e6ece6; }}
+    .switch {{ margin: 16px 0 0; font-size: 0.88rem; }}
+    a {{ color: #175243; text-underline-offset: 3px; font-weight: 550; }}
+    .alert {{
+      padding: 10px 12px; border-radius: 9px; background: #fef2f2;
+      border: 1px solid #fecaca; color: #991b1b; font-size: .85rem; margin: 0 0 12px;
+    }}
+    @media (max-width: 760px) {{
+      body {{ padding: 12px; }}
+      .auth-shell {{ grid-template-columns: minmax(0, 1fr); }}
+      .product {{ padding: 26px; }}
+      .kicker {{ margin-top: 18px; }}
+      .features {{ display: none; }}
+      .entry {{ padding: 26px; }}
+    }}
+  </style>
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="product" aria-label="Muse 知行学业工作台">
+      <div>
+        <div class="brand"><span class="mark" aria-hidden="true">M</span> Muse 知行</div>
+        <div class="kicker">Personal Academic Agent</div>
+        <h1>知校情 · 懂自己<br>算清账 · 能落地</h1>
+        <p>面向高校学生的独立学业决策与成长规划工作台：校规知识检索、160 学分毕业体检、What-If 综测沙盘与 .ics 避课排期一站闭环。</p>
+      </div>
+      <ul class="features">
+        <li><strong>确定性学分体检</strong><span>零算术幻觉核算 GPA 与博约通识缺口</span></li>
+        <li><strong>What-If 综测沙盘</strong><span>量化对比重修刷分与榜单竞赛 ROI</span></li>
+        <li><strong>私有资料检索</strong><span>账号独立工作区 SQLite FTS5 全文索引</span></li>
+        <li><strong>机会雷达与日历</strong><span>资格自动对账并导出标准 .ics 日程</span></li>
+      </ul>
+    </section>
+    <section class="entry">
+      <h2>{title}</h2>
+      <p class="entry-sub">每个账号拥有完全隔离的私有文件库、长期记忆与对话工作区。</p>
+      <p class="hint">模型 API Key 由你本人填写：登录后点右上角「未配置推理引擎」，支持 DeepSeek 官方 / 华为云 MaaS / SiliconFlow / 阿里云百炼 / 本地 Ollama。密钥只保存在你自己的账号工作区，不与他人共享。</p>
+      {message}
+      <form action="{action}" method="post">
+        <label for="username">账号</label>
+        <input id="username" name="username" autocomplete="username" maxlength="32" required>
+        <label for="password">密码</label>
+        <input id="password" name="password" type="password" autocomplete="{password_autocomplete}" minlength="10" maxlength="128" required>
+        <p class="hint">新账号请使用至少 10 个字符的密码。</p>
+        {register_code}
+        <button type="submit">{title}</button>
+      </form>
+      <div class="switch">{alternate}</div>
+      {data_hint}
+    </section>
+  </main>
+</body>
+</html>
