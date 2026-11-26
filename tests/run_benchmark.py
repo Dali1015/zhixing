@@ -28,10 +28,10 @@ from types import SimpleNamespace
 from unittest.mock import patch
 import zipfile
 
-TEST_WS = tempfile.mkdtemp(prefix="muse_runtime_bench_")
-os.environ["MUSE_WORKSPACE_DIR"] = TEST_WS
-os.environ["MUSE_DISABLE_DAEMON"] = "1"
-os.environ["MUSE_QUIET_LOG"] = "1"
+TEST_WS = tempfile.mkdtemp(prefix="zhixing_runtime_bench_")
+os.environ["ZHIXING_WORKSPACE_DIR"] = TEST_WS
+os.environ["ZHIXING_DISABLE_DAEMON"] = "1"
+os.environ["ZHIXING_QUIET_LOG"] = "1"
 # 确保初始测试环境无外部残留环境变量密钥，先验证未配置诚实态
 for _k in ("DEEPSEEK_API_KEY", "SILICONFLOW_API_KEY", "DASHSCOPE_API_KEY", "AGENTARTS_API_KEY", "OPENAI_API_KEY"):
     os.environ.pop(_k, None)
@@ -613,7 +613,7 @@ def test_9_search_timeout_and_model_upgrade():
 def test_10_team_private_chat():
     invite = Invite("test-code-only-12345", "independent-signing-key-for-test")
     handler = create_handler(app_run.AppHandler)
-    public_origin = "https://muse-preview.example"
+    public_origin = "https://zhixing-preview.example"
     server = SimpleNamespace(invite=invite, data_dir=Path(TEST_WS) / "team",
                              public_origin=public_origin, chat_slots=BoundedSemaphore(4))
 
@@ -633,7 +633,7 @@ def test_10_team_private_chat():
     def login():
         status, headers, _ = request("POST", "/login", raw_body=b"code=test-code-only-12345", headers=browser_headers)
         assert status == 303
-        cookie = re.search(r"Set-Cookie: (muse_team=[^;]+);.*Secure; HttpOnly; SameSite=Lax", headers)
+        cookie = re.search(r"Set-Cookie: (zhixing_team=[^;]+);.*Secure; HttpOnly; SameSite=Lax", headers)
         assert cookie
         return cookie.group(1)
 
@@ -688,7 +688,7 @@ def test_11_product_registration_isolation_and_score():
         return request("POST", path, raw_body=urlencode(fields).encode())
 
     def cookie_from(headers):
-        found = re.search(r"Set-Cookie: (muse_account=[^;]+); .*HttpOnly; SameSite=Lax; .*Secure", headers)
+        found = re.search(r"Set-Cookie: (zhixing_account=[^;]+); .*HttpOnly; SameSite=Lax; .*Secure", headers)
         assert found, headers
         return found.group(1)
 
@@ -903,7 +903,7 @@ def test_14_account_template_and_product_academic_isolation():
         raw_body=urlencode({"username": "student01", "password": "a very secure passphrase"}).encode(),
     )
     assert status == 303
-    cookie = re.search(r"Set-Cookie: (muse_account=[^;]+);", headers).group(1)
+    cookie = re.search(r"Set-Cookie: (zhixing_account=[^;]+);", headers).group(1)
     code, _, raw = _InMemoryHTTP.request(
         "POST", "/api/academic/analyze",
         {"rows": "课程,学分,成绩,模块\n高等数学,5,90,专业必修\n博约经典,2,88,博约经典"},

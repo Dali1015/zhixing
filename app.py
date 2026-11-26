@@ -7,7 +7,7 @@
 1. 不要求服务端预置模型密钥：`llm_config_override` 传 None，
    每个账号在自己的工作区 SQLite 里保存各自的接口地址、Key 与模型名；
 2. 不要求提前知道公网域名：public_origin 留空时，CSRF 校验退化为同 Host 校验；
-3. 注册默认开放，可用 MUSE_REGISTRATION_CODE 追加邀请码、MUSE_ALLOW_REGISTRATION=0 关闭注册。
+3. 注册默认开放，可用 ZHIXING_REGISTRATION_CODE 追加邀请码、ZHIXING_ALLOW_REGISTRATION=0 关闭注册。
 """
 
 import os
@@ -16,18 +16,19 @@ import sys
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from backend.runtime.settings import get_setting
+
 BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = Path(os.environ.get("MUSE_ACCOUNT_DATA_DIR") or (BASE_DIR / ".account_data"))
+DATA_DIR = Path(get_setting("ACCOUNT_DATA_DIR") or (BASE_DIR / ".account_data"))
 
 # 单用户运行时所需的种子工作区与后台守护线程：托管环境里放到数据目录并关闭
-os.environ.setdefault("MUSE_WORKSPACE_DIR", str(DATA_DIR / "service"))
-os.environ.setdefault("MUSE_DISABLE_DAEMON", "1")
+os.environ.setdefault("ZHIXING_WORKSPACE_DIR", get_setting("WORKSPACE_DIR", str(DATA_DIR / "service")))
+os.environ.setdefault("ZHIXING_DISABLE_DAEMON", get_setting("DISABLE_DAEMON", "1"))
 
 sys.path.insert(0, str(BASE_DIR))
 
-from backend.runtime.accounts import SESSION_TTL  # noqa: E402
 from backend.runtime.llm_client import probe_llm_connection  # noqa: E402
-from product_server import COOKIE_NAME, configure_server, create_product_handler  # noqa: E402
+from product_server import configure_server, create_product_handler  # noqa: E402
 from run import AppHandler, _ZhixingHTTPServer, _public_llm_status  # noqa: E402
 
 # 产品版默认把模型配置锁在服务端；这里把「我的模型配置」开放给已登录账号
@@ -44,6 +45,7 @@ class PersonalWorkspaceHandler(create_product_handler(AppHandler)):
         return status
 
     def _secure_request(self):
+        # 托管版按请求协议决定 Secure 标记，本地 HTTP 调试也能登录。
         proto = (self.headers.get("X-Forwarded-Proto") or "").split(",")[0].strip().lower()
         return proto == "https"
 
@@ -86,22 +88,6 @@ class PersonalWorkspaceHandler(create_product_handler(AppHandler)):
             self._send_json({"error": "请求大小无效。"}, status=413)
             return False
         return True
-
-    def _redirect_account(self, path, token=None):
-        # 与产品版一致，但 Secure 标记按当前请求协议判定（本地 http 调试不会丢 Cookie）
-        self.send_response(303)
-        self._send_cors()
-        self.send_header("Location", path)
-        self.send_header("Cache-Control", "no-store")
-        if token is not None:
-            lifetime = SESSION_TTL if token else 0
-            secure = "; Secure" if self._secure_request() else ""
-            self.send_header(
-                "Set-Cookie",
-                f"{COOKIE_NAME}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={lifetime}{secure}",
-            )
-        self.send_header("Content-Length", "0")
-        self.end_headers()
 
     def _save_llm(self, body):
         self.storage.save_llm_config(
@@ -164,11 +150,11 @@ def main():
             server,
             DATA_DIR,
             None,  # 关键：不做全局覆盖，每个账号读取自己工作区里的模型配置
-            public_origin=(os.environ.get("MUSE_PUBLIC_ORIGIN") or "").strip(),
+            public_origin=(get_setting("PUBLIC_ORIGIN") or "").strip(),
             secure=False,  # 由 _redirect_account 按请求协议动态判定
-            registration_code=os.environ.get("MUSE_REGISTRATION_CODE", ""),
-            registration_enabled=os.environ.get("MUSE_ALLOW_REGISTRATION", "1") != "0",
-            chat_limit=int(os.environ.get("MUSE_DAILY_CHAT_LIMIT", "50")),
+            registration_code=get_setting("REGISTRATION_CODE", ""),
+            registration_enabled=get_setting("ALLOW_REGISTRATION", "1") != "0",
+            chat_limit=int(get_setting("DAILY_CHAT_LIMIT", "50")),
         )
         print(f"知行个人学业工作台已启动 -> http://{host}:{port}", flush=True)
         print(f"  数据目录: {DATA_DIR}", flush=True)

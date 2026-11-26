@@ -35,6 +35,7 @@ from backend.runtime.academic_engine import (
 from backend.runtime.agent_loop import execute_runtime_tool, run_agent_stream
 from backend.runtime.llm_client import is_llm_configured, probe_llm_connection, resolve_model
 from backend.runtime.mcp_bridge import MCPClient, build_mcp_server_manifest
+from backend.runtime.settings import get_setting
 from backend.runtime.skills import SkillManager
 from backend.runtime.storage import RuntimeStorage, extract_file_text
 from backend.runtime.web_tools import (
@@ -49,14 +50,14 @@ FRONTEND_FILE = os.path.join(BASE_DIR, "frontend", "index.html")
 KB_DIR = os.path.join(BASE_DIR, "knowledge_base")
 SEED_NOTICES_FILE = os.path.join(BASE_DIR, "backend", "data", "campus_notices.json")
 
-WORKSPACE_DIR = os.environ.get("MUSE_WORKSPACE_DIR", os.path.join(BASE_DIR, "workspace"))
+WORKSPACE_DIR = get_setting("WORKSPACE_DIR", os.path.join(BASE_DIR, "workspace"))
 STORAGE = RuntimeStorage(WORKSPACE_DIR)
 SKILLS_MGR = SkillManager(STORAGE.skills_dir)
 PRODUCT_ENTRY = __name__ == "__main__" and "--product" in sys.argv[1:]
 if not PRODUCT_ENTRY:
     STORAGE.bootstrap_defaults(builtin_kb_dir=KB_DIR, seed_notices_path=SEED_NOTICES_FILE)
 
-if not PRODUCT_ENTRY and os.environ.get("MUSE_DISABLE_DAEMON") != "1":
+if not PRODUCT_ENTRY and get_setting("DISABLE_DAEMON") != "1":
     start_feed_daemon(STORAGE)
 
 # 可供自动化基准测试注入流函数或本地 MCP 传输层的钩子（生产环境保持 None）
@@ -168,7 +169,7 @@ class AppHandler(BaseHTTPRequestHandler):
         return True
 
     def log_message(self, fmt: str, *args: Any) -> None:
-        if os.environ.get("MUSE_QUIET_LOG") == "1":
+        if get_setting("QUIET_LOG") == "1":
             return
         sys.stderr.write("[ZhixingRuntime] %s - %s\n" % (self.address_string(), fmt % args))
 

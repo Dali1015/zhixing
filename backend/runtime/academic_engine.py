@@ -849,7 +849,7 @@ def build_ics_calendar(
         "X-WR-TIMEZONE:Asia/Shanghai",
     ]
     for idx, ev in enumerate(events, start=1):
-        uid = f"muse-{uuid.uuid4().hex[:10]}-{idx}@zhixing.agent"
+        uid = f"zhixing-{uuid.uuid4().hex[:10]}-{idx}@zhixing.agent"
         summary = _ics_escape(ev.get("summary") or f"学业计划 #{idx}")
         desc = _ics_escape(ev.get("description") or "")
         loc = _ics_escape(ev.get("location") or "河南师范大学 · 知行排期")

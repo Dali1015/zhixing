@@ -1717,7 +1717,7 @@
   "use strict";
 
   const state = {
-    theme: localStorage.getItem("muse_theme") || "light",
+    theme: localStorage.getItem("zhixing_theme") || localStorage.getItem("muse_theme") || "light",
     activeView: "chat",
     studioTab: "audit",
     workspaceTab: "memories",
@@ -1854,7 +1854,7 @@
   function applyTheme(themeName) {
     state.theme = themeName === "dark" ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", state.theme);
-    try { localStorage.setItem("muse_theme", state.theme); } catch (_) {}
+    try { localStorage.setItem("zhixing_theme", state.theme); } catch (_) {}
     const icon = el("themeIconSvg");
     if (icon) {
       icon.innerHTML = state.theme === "dark"

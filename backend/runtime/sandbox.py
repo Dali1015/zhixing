@@ -77,7 +77,7 @@ def execute_python_code(
             if os.path.isfile(fp):
                 before_snap[fp] = os.path.getmtime(fp)
 
-    run_dir = tempfile.mkdtemp(prefix="muse_py_")
+    run_dir = tempfile.mkdtemp(prefix="zhixing_py_")
     script_path = os.path.join(run_dir, "_agent_task.py")
 
     # 注入便捷路径常量与纯标准库 Office/文本读取辅助函数供 Agent 脚本直接调用

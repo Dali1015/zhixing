@@ -63,7 +63,7 @@ python3 tests/run_benchmark.py
 
 将代码放进私有仓库后，可在 Render 中用 `render.yaml` 建立免费 Web Service。`team_server.py` 使用邀请码进入问答，每个浏览器使用独立的会话工作区。组员打开托管平台分配的 HTTPS 地址并输入邀请码即可使用。
 
-在托管平台配置 `DEEPSEEK_API_KEY` 和至少 12 位的 `MUSE_TEAM_CODE`。Render 会自动生成独立的 `MUSE_TEAM_COOKIE_KEY`。试用支持真实模型问答和公开网页搜索，聊天记录存在免费实例的临时磁盘，实例重启后可能清空。
+在托管平台配置 `DEEPSEEK_API_KEY` 和至少 12 位的 `ZHIXING_TEAM_CODE`。Render 会自动生成独立的 `ZHIXING_TEAM_COOKIE_KEY`。试用支持真实模型问答和公开网页搜索，聊天记录存在免费实例的临时磁盘，实例重启后可能清空。
 
 ## 六、个人注册登录版（托管推荐入口）
 
@@ -76,9 +76,9 @@ PORT=8000 python3 app.py
 与 `python3 run.py --product` 的差别：
 
 - 模型配置按账号存储（`llm_config_override=None`），每个账号的 Key / 接口地址 / 模型名互不可见；
-- 不要求提前知道公网域名：`MUSE_PUBLIC_ORIGIN` 留空时 CSRF 校验退化为同 Host 校验；
-- 注册默认开放（可用 `MUSE_REGISTRATION_CODE` 加邀请码、`MUSE_ALLOW_REGISTRATION=0` 关闭注册）；
-- 账号库与各账号工作区默认落在 `.account_data/`，可用 `MUSE_ACCOUNT_DATA_DIR` 改到持久磁盘。
+- 不要求提前知道公网域名：`ZHIXING_PUBLIC_ORIGIN` 留空时 CSRF 校验退化为同 Host 校验；
+- 注册默认开放（可用 `ZHIXING_REGISTRATION_CODE` 加邀请码、`ZHIXING_ALLOW_REGISTRATION=0` 关闭注册）；
+- 账号库与各账号工作区默认落在 `.account_data/`，可用 `ZHIXING_ACCOUNT_DATA_DIR` 改到持久磁盘。
 
 登录后点右上角「未配置推理引擎」→ 选择服务商预设 → 填 API Key → 「测试连接」（成功会自动保存）。未配置模型时，资料上传、FTS5 知识检索与「学业决策驾驶舱」的确定性精算仍可正常使用。
 
@@ -96,14 +96,16 @@ python3 run.py --product
 
 ### 对外部署配置参考
 
+新版配置使用 `ZHIXING_` 前缀，已有部署的旧版变量继续有效。两者同时设置时，优先使用新版变量。
+
 | 配置 | 用途 |
 | --- | --- |
-| `MUSE_PUBLIC_ORIGIN` | 真实 HTTPS 域名，例如 `https://study.example.com`。由反向代理终止 HTTPS。 |
-| `MUSE_PRODUCT_DATA_DIR` | 账号库和私人工作区所在的持久磁盘目录。 |
+| `ZHIXING_PUBLIC_ORIGIN` | 真实 HTTPS 域名，例如 `https://study.example.com`。由反向代理终止 HTTPS。 |
+| `ZHIXING_PRODUCT_DATA_DIR` | 账号库和私人工作区所在的持久磁盘目录。 |
 | `DEEPSEEK_API_KEY` | 服务端统一模型密钥，仅 `run.py --product` / `team_server.py` 入口需要；`app.py` 由每位用户自行填写。 |
-| `MUSE_REGISTRATION_CODE` | 配置后使用邀请码注册。留空时开放注册。 |
-| `MUSE_ALLOW_REGISTRATION` | 设置为 `0` 时关闭新账号注册，已有账号仍可登录。 |
-| `MUSE_DAILY_CHAT_LIMIT` | 每账号连续 24 小时问答额度，默认 50。`0` 表示由外部网关控制额度。 |
+| `ZHIXING_REGISTRATION_CODE` | 配置后使用邀请码注册。留空时开放注册。 |
+| `ZHIXING_ALLOW_REGISTRATION` | 设置为 `0` 时关闭新账号注册，已有账号仍可登录。 |
+| `ZHIXING_DAILY_CHAT_LIMIT` | 每账号连续 24 小时问答额度，默认 50。`0` 表示由外部网关控制额度。 |
 
 当前内置 HTTP 服务用于本地体验和受控试用。正式上线前应使用生产 HTTP 服务和 HTTPS 网关，配置持久磁盘与模型配额，补齐账号找回流程，并在目标环境验证双账号隔离、问答和备份恢复。
 
@@ -112,13 +114,13 @@ python3 run.py --product
 需要「改完代码自动上线」时，用 Git + Render 这条链路，`render.yaml` 已按 `app.py` 配好：
 
 1. 在 GitHub 建一个私有仓库，把 `zhixing_agent` 目录推上去（仓库根目录就是本目录，`render.yaml` 必须在根）。
-2. Render 控制台选择 **New → Blueprint**，绑定该仓库，它会读取 `render.yaml` 并创建 `muse-personal`（个人注册登录版）与 `muse-team-preview`（组内邀请码版，不需要可删掉该段）。
+2. Render 控制台选择 **New → Blueprint**，绑定该仓库，它会读取 `render.yaml` 并创建 `zhixing-personal`（个人注册登录版）与 `zhixing-team-preview`（组内邀请码版，不需要可删掉该段）。
 3. 之后任何一次 `git push` 到默认分支，Render 自动重新构建并部署；队友或 AI 提交代码同样生效。
 
 几点需要注意：
 
 - 两个发布通道互不影响：Git 推送到 Render 不会更新 WorkBuddy 那边生成的分享链接，反之亦然。
 - 免费实例 15 分钟无访问会休眠，首次访问需等 30–60 秒冷启动。
-- 免费实例是临时磁盘，每次重新部署都会清空账号与聊天记录；要保留数据需挂载 Render Disk，并把 `MUSE_ACCOUNT_DATA_DIR` 指到挂载点（例如 `/var/data`）。
+- 免费实例是临时磁盘，每次重新部署都会清空账号与聊天记录；要保留数据需挂载 Render Disk，并把 `ZHIXING_ACCOUNT_DATA_DIR` 指到挂载点（例如 `/var/data`）。
 - 不想依赖外部平台时，也可以在本地用 `git` 暂存改动，再让 WorkBuddy 重新发布当前代码。
 

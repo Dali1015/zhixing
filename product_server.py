@@ -17,12 +17,14 @@ from zipfile import BadZipFile, ZipFile
 from backend.runtime.accounts import AccountStore, SESSION_TTL
 from backend.runtime.http_guard import ProtectedBrowserRequests
 from backend.runtime.llm_client import is_llm_configured, resolve_model
+from backend.runtime.settings import get_setting
 from backend.runtime.skills import SkillManager
 from backend.runtime.storage import RuntimeStorage, safe_filename
 from backend.runtime.study import weighted_score
 
 
-COOKIE_NAME = "muse_account"
+COOKIE_NAME = "zhixing_account"
+LEGACY_COOKIE_NAME = "muse_account"
 FILE_LIMIT = 2 * 1024 * 1024
 DOCX_XML_LIMIT = 4 * 1024 * 1024
 ACCOUNT_FILE_LIMIT = 20
@@ -125,7 +127,7 @@ def create_product_handler(base_handler):
             return any(s["session_id"] == session_id for s in self.storage.list_sessions())
 
         def log_request(self, code="-", size="-"):
-            if os.environ.get("MUSE_QUIET_LOG") != "1":
+            if get_setting("QUIET_LOG") != "1":
                 self.log_message("%s %s %s", self.command, urlsplit(self.path).path, code)
 
         def _read_json_body(self):
@@ -136,10 +138,14 @@ def create_product_handler(base_handler):
 
         def _account_token(self):
             try:
-                cookie = SimpleCookie(self.headers.get("Cookie", "")).get(COOKIE_NAME)
+                cookies = SimpleCookie(self.headers.get("Cookie", ""))
+                cookie = cookies.get(COOKIE_NAME) or cookies.get(LEGACY_COOKIE_NAME)
             except CookieError:
                 return ""
             return cookie.value if cookie else ""
+
+        def _secure_request(self):
+            return self.server.secure_cookies
 
         def _redirect_account(self, path, token=None):
             self.send_response(303)
@@ -147,9 +153,11 @@ def create_product_handler(base_handler):
             self.send_header("Location", path)
             self.send_header("Cache-Control", "no-store")
             if token is not None:
-                secure = "; Secure" if self.server.secure_cookies else ""
+                secure = "; Secure" if self._secure_request() else ""
                 lifetime = SESSION_TTL if token else 0
                 self.send_header("Set-Cookie", f"{COOKIE_NAME}={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age={lifetime}{secure}")
+                if LEGACY_COOKIE_NAME in self.headers.get("Cookie", ""):
+                    self.send_header("Set-Cookie", f"{LEGACY_COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0{secure}")
             self.send_header("Content-Length", "0")
             self.end_headers()
 
@@ -351,16 +359,16 @@ def configure_server(server, root, config, public_origin="", secure=False, regis
 def start_product(base_handler, base_server, local_storage):
     host = os.environ.get("HOST", "127.0.0.1")
     port = int(os.environ.get("PORT", "8766"))
-    origin = (os.environ.get("MUSE_PUBLIC_ORIGIN") or os.environ.get("RENDER_EXTERNAL_URL") or "").strip().rstrip("/")
+    origin = (get_setting("PUBLIC_ORIGIN") or os.environ.get("RENDER_EXTERNAL_URL") or "").strip().rstrip("/")
     loopback = host in {"127.0.0.1", "localhost"}
     if origin:
         parsed = urlsplit(origin)
         if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.path or parsed.query or parsed.fragment:
-            raise SystemExit("MUSE_PUBLIC_ORIGIN 须填写网站的 HTTPS 源地址。")
+            raise SystemExit("ZHIXING_PUBLIC_ORIGIN 须填写网站的 HTTPS 源地址。")
     if not loopback and not origin:
-        raise SystemExit("对外绑定前请配置 MUSE_PUBLIC_ORIGIN，并通过 HTTPS 反向代理提供访问。")
+        raise SystemExit("对外绑定前请配置 ZHIXING_PUBLIC_ORIGIN，并通过 HTTPS 反向代理提供访问。")
 
-    root = Path(os.environ.get("MUSE_PRODUCT_DATA_DIR", str(Path(local_storage.workspace_dir) / "product")))
+    root = Path(get_setting("PRODUCT_DATA_DIR", str(Path(local_storage.workspace_dir) / "product")))
     root.mkdir(mode=0o700, parents=True, exist_ok=True)
     config = local_storage.get_llm_config() if loopback and not origin else RuntimeStorage(str(root / "service")).get_llm_config()
     if origin and not is_llm_configured(config):
@@ -368,9 +376,9 @@ def start_product(base_handler, base_server, local_storage):
     handler = create_product_handler(base_handler)
     with base_server((host, port), handler) as server:
         configure_server(server, root, config, origin, secure=bool(origin),
-                         registration_code=os.environ.get("MUSE_REGISTRATION_CODE", ""),
-                         registration_enabled=os.environ.get("MUSE_ALLOW_REGISTRATION", "1") != "0",
-                         chat_limit=int(os.environ.get("MUSE_DAILY_CHAT_LIMIT", "50")))
+                         registration_code=get_setting("REGISTRATION_CODE", ""),
+                         registration_enabled=get_setting("ALLOW_REGISTRATION", "1") != "0",
+                         chat_limit=int(get_setting("DAILY_CHAT_LIMIT", "50")))
         print(f"知行学业工作台 -> {origin or f'http://{host}:{port}'}", flush=True)
         try:
             server.serve_forever()

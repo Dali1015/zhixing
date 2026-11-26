@@ -232,7 +232,11 @@ class RuntimeStorage:
         self.skills_dir = os.path.join(self.workspace_dir, "skills")
         for d in (self.data_dir, self.files_dir, self.artifacts_dir, self.skills_dir):
             os.makedirs(d, exist_ok=True)
-        self.db_path = os.path.join(self.data_dir, "muse_agent.db")
+        self.db_path = os.path.join(self.data_dir, "zhixing_agent.db")
+        legacy_db = os.path.join(self.data_dir, "muse_agent.db")
+        # 直接打开旧数据库，让 SQLite 正常处理可能存在的 WAL 文件。
+        if not os.path.exists(self.db_path) and os.path.isfile(legacy_db):
+            self.db_path = legacy_db
         self._lock = threading.Lock()
         self._init_schema()
 

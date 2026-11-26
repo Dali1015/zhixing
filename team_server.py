@@ -13,10 +13,12 @@ import time
 from urllib.parse import parse_qs, urlsplit
 
 from backend.runtime.http_guard import ProtectedBrowserRequests
+from backend.runtime.settings import get_setting
 from backend.runtime.storage import RuntimeStorage
 
 
-COOKIE_NAME = "muse_team"
+COOKIE_NAME = "zhixing_team"
+LEGACY_COOKIE_NAME = "muse_team"
 COOKIE_TTL = 7 * 24 * 60 * 60
 TEAM_TOOLS = frozenset({"web_search", "search_knowledge"})
 GET_ROUTES = {"/", "/index.html", "/api/bootstrap", "/api/sessions/messages"}
@@ -81,7 +83,8 @@ class Invite:
 
     def session_id(self, header: str) -> str:
         try:
-            cookie = SimpleCookie(header).get(COOKIE_NAME)
+            cookies = SimpleCookie(header)
+            cookie = cookies.get(COOKIE_NAME) or cookies.get(LEGACY_COOKIE_NAME)
         except CookieError:
             return ""
         if not cookie or not re.fullmatch(r"[0-9a-f]{32}\.[0-9]{1,12}\.[0-9a-f]{64}", cookie.value):
@@ -185,13 +188,18 @@ def create_handler(base_handler):
 
 
 def main():
-    root = Path(os.environ.get("MUSE_TEAM_DATA_DIR", str(Path(tempfile.gettempdir()) / "muse-team")))
-    invite = Invite(os.environ.get("MUSE_TEAM_CODE", ""), os.environ.get("MUSE_TEAM_COOKIE_KEY", ""))
+    temp_root = Path(tempfile.gettempdir())
+    default_root = temp_root / "zhixing-team"
+    legacy_root = temp_root / "muse-team"
+    if not default_root.exists() and legacy_root.is_dir():
+        default_root = legacy_root
+    root = Path(get_setting("TEAM_DATA_DIR", str(default_root)))
+    invite = Invite(get_setting("TEAM_CODE", ""), get_setting("TEAM_COOKIE_KEY", ""))
     if not os.environ.get("DEEPSEEK_API_KEY", "").strip():
         raise SystemExit("请在托管平台配置 DEEPSEEK_API_KEY。")
 
-    os.environ["MUSE_WORKSPACE_DIR"] = str(root / "service")
-    os.environ["MUSE_DISABLE_DAEMON"] = "1"
+    os.environ["ZHIXING_WORKSPACE_DIR"] = str(root / "service")
+    os.environ["ZHIXING_DISABLE_DAEMON"] = "1"
     from run import AppHandler, _ZhixingHTTPServer
 
     root = root / "visitors"
